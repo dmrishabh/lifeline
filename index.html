@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Progress Utility</title>
+    <!-- Google Fonts: Inter (Black 900, Bold 700) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="container">
+        <header>
+            <h1>Life Progress Generator</h1>
+            <p>Enter your Date of Birth to visualize your life progress.</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob">
+            </div>
+            
+            <div class="control-group">
+                <label for="colorPicker">Theme Color</label>
+                <input type="color" id="colorPicker" value="#000000">
+            </div>
+
+            <div class="control-group">
+                <label for="positionSelector">Label Position</label>
+                <select id="positionSelector">
+                    <option value="above">Above Bar</option>
+                    <option value="below">Below Bar</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="radiusSelector">Corner Radius</label>
+                <input type="range" id="radiusSelector" min="0" max="24" value="0" step="1">
+            </div>
+
+            <button id="downloadBtn" disabled>Download PNG</button>
+        </div>
+
+        <!-- The Capture Area -->
+        <div class="preview-container">
+            <div id="captureArea" class="graphic-container">
+                <div class="labels">
+                    <span id="percentageText" class="label-left">0%</span>
+                    <span class="label-right">Life</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p id="footerText">Based on 70 years life expectancy.</p>
+        </footer>
+    </main>
+
+    <!-- HTML2Canvas Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
