@@ -124,23 +124,49 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadBtn.addEventListener('click', () => {
         if (!dobInput.value) return;
         
-        // Hide UI elements not meant for capture if any (none in captureArea)
-        // Ensure background is transparent
-        
-        html2canvas(captureArea, {
-            scale: 4, // High resolution (approx 300 DPI if base is ~72-96)
-            backgroundColor: null, // Transparent background
+        // Mobile Fix: Create a "Virtual Container" clone for export
+        // This ensures the graphic is rendered at 800px fixed width regardless of device
+        const original = document.getElementById('captureArea');
+        const clone = original.cloneNode(true); // Deep clone
+
+        // Apply styles to the clone to force specific dimensions and layout
+        Object.assign(clone.style, {
+            position: 'absolute',
+            top: '-9999px',
+            left: '-9999px',
+            width: '800px', // Requirement: Fixed internal width
+            maxWidth: 'none', // Override responsive constraint
+            boxSizing: 'border-box', // Include padding in width
+            margin: '0',
+            zIndex: '-1',
+            borderRadius: '12px' // Ensure container radius is preferred or reset
+        });
+
+        // Append to body to allow style computation
+        document.body.appendChild(clone);
+
+        html2canvas(clone, {
+            scale: 4.125, // Requirement: High-Resolution Scale
+            backgroundColor: null, // Requirement: Transparent
             logging: false,
-            width: captureArea.offsetWidth, // Ensure full width captured
-            height: captureArea.offsetHeight
+            useCORS: true,
+            windowWidth: 1920, // Mock Desktop Width to ensure Full styling (fonts, etc)
+            width: 800, // Explicit capture width
+            height: clone.offsetHeight // Maintain calculated height
         }).then(canvas => {
             const link = document.createElement('a');
             link.download = 'life-progress.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
+            
+            // Cleanup
+            document.body.removeChild(clone);
         }).catch(err => {
             console.error('Export failed:', err);
             alert('Failed to generate image. Please try again.');
+            if (document.body.contains(clone)) {
+                document.body.removeChild(clone);
+            }
         });
     });
 });
