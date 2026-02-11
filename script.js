@@ -34,6 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const progress = calculateProgress(dob);
         const formattedProgress = progress.toFixed(1); // 1 decimal place
 
+        // Update the Bar and Text
+        percentageText.textContent = `${formattedProgress}%`;
+        progressBar.style.width = `${formattedProgress}%`;
+        downloadBtn.disabled = false; // Enable download
+
         
         // Custom Color Logic based on percentage
         // Start: #2b630d (Green) -> End: #8a0000 (Dark Red)
